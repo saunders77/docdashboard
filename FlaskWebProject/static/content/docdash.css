@@ -1,0 +1,14 @@
+﻿*{
+    font-family: Segoe UI, Arial, Helvetica, sans-serif;
+}
+
+body{
+
+    /*color:rgb(175,185,195);*/
+    color: white;
+    margin:0px;
+    padding:5px;
+    background-color:rgb(30,37,45);
+    /*overflow:hidden; */
+  
+}
