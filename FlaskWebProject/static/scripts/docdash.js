@@ -10,7 +10,7 @@ Office.initialize = function (reason) {
     $(document).ready(function () {
 
 
-        window.alert("Hello World!");
+        document.body.innerHTML += "foo";
 
     });
 /*} */
