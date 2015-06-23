@@ -41,6 +41,10 @@
     <Folder Include="FlaskWebProject\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FlaskWebProject\static\content\docdash.css" />
+    <Content Include="FlaskWebProject\static\scripts\docdash.js" />
+    <Content Include="FlaskWebProject\static\scripts\office.runtime.js" />
+    <Content Include="FlaskWebProject\static\scripts\word.js" />
     <Content Include="requirements.txt" />
     <Content Include="FlaskWebProject\static\content\bootstrap.css" />
     <Content Include="FlaskWebProject\static\content\bootstrap.min.css" />
