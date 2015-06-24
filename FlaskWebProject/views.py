@@ -6,6 +6,8 @@ from datetime import datetime
 from flask import render_template, request
 from FlaskWebProject import app
 
+import FlaskWebProject.api_put
+
 @app.route('/')
 @app.route('/home')
 def home():
