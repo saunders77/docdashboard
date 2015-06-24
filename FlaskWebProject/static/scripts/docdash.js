@@ -40,6 +40,7 @@ var myDoc = {
     },
     
     startRecording: function(){
+        write("started recording");
         var result = true;
         if (this.isRecording) {
             // then you can't start it if it's already started
@@ -131,7 +132,7 @@ Office.initialize = function (reason) {
     $(document).ready(function () {
 
 
-        document.body.innerHTML += "foomy";
+        document.body.innerHTML += "foomi";
         
         myDoc.startRecording();
         myDoc.startDisplaying();
