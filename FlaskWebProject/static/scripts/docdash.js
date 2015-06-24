@@ -13,6 +13,17 @@ function test() {
             );
 }
 
+function test2() {
+    Office.context.document.setSelectedDataAsync("Hello World!2",
+                function (asyncResult) {
+                    var error = asyncResult.error;
+                    if (asyncResult.status === "failed") {
+                        write(error.name + ": " + error.message);
+                    }
+                }
+            );
+}
+
 
 Office.initialize = function (reason) {
 
