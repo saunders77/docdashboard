@@ -40,22 +40,22 @@ var myDoc = {
     },
     
     startRecording: function(){
-        write("started recording");
+        //write("started recording");
         var result = true;
         if (this.isRecording) {
             // then you can't start it if it's already started
             result = false;
         }
         else{
-            write("hasn't started yet");
+            //write("hasn't started yet");
             this.isRecording = true;
-            write("hasn't started yet2");
+            //write("hasn't started yet2");
             if (!this.data.stats.timeCreated) {
                 // then this is the first time recording has ever happened in this doc
                 var d = new Date();
                 this.data.stats.timeCreated = d.getTime();
             }
-            write("hasn't started yet3");
+            //write("hasn't started yet3");
             this.recordNextStats();
         }
         return result;
@@ -76,6 +76,7 @@ var myDoc = {
     },
     
     gotFullText: function(result){
+        write("returned from getting text");
         if (result.status == "succeeded") {
             var d = new Date();
             
@@ -91,11 +92,13 @@ var myDoc = {
     
     startDisplaying: function(){
         var result = true;
+        write("start?  displaying");
         if (this.isDisplaying) {
             // then you can't start it if it's already started
             result = false;
         }
         else{
+            write("yes, we can start displaying");
             this.isDisplaying = true;
             this.displayNextStats();
         }
