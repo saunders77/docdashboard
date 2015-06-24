@@ -31,7 +31,7 @@ Office.initialize = function (reason) {
 
     $(document).ready(function () {
 
-        $("#mybutton").click(function () {
+        $(".butt").click(function () {
 
             test();
             
