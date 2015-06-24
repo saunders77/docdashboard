@@ -30,12 +30,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="FlaskWebProject\api_put.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FlaskWebProject\docdb.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="FlaskWebProject\api_put.py" />
+    <Compile Include="FlaskWebProject\docdb.py" />
     <Compile Include="runserver.py" />
     <Compile Include="FlaskWebProject\__init__.py" />
     <Compile Include="FlaskWebProject\views.py" />
