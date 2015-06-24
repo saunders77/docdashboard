@@ -50,10 +50,10 @@ var myDoc = {
             write("hasn't started yet");
             this.isRecording = true;
             write("hasn't started yet2");
-            if (!timeCreated) {
+            if (!this.data.stats.timeCreated) {
                 // then this is the first time recording has ever happened in this doc
                 var d = new Date();
-                this.timeCreated = d.getTime();
+                this.data.stats.timeCreated = d.getTime();
             }
             write("hasn't started yet3");
             this.recordNextStats();
@@ -135,7 +135,7 @@ Office.initialize = function (reason) {
     $(document).ready(function () {
 
 
-        document.body.innerHTML += "fooma";
+        document.body.innerHTML += "foomp";
         
         myDoc.startRecording();
         myDoc.startDisplaying();
