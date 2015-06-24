@@ -1,0 +1,6 @@
+syntax: glob
+docdashboard/Lib/*
+docdashboard/.ptvs/*
+docdashboard/Scripts/*
+obj/*
+bin/*
