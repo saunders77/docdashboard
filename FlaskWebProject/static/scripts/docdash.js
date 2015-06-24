@@ -163,7 +163,7 @@ function post() {
 }
 
 function postCallback(result){
-    write("result from Post is: " + result.value);
+    write("docid from Post is: " + JSON.parse(result).docid);
 }
 
 Office.initialize = function (reason) {
