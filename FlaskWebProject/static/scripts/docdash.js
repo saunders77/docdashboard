@@ -49,11 +49,13 @@ var myDoc = {
         else{
             write("hasn't started yet");
             this.isRecording = true;
+            write("hasn't started yet2");
             if (!timeCreated) {
                 // then this is the first time recording has ever happened in this doc
                 var d = new Date();
                 this.timeCreated = d.getTime();
             }
+            write("hasn't started yet3");
             this.recordNextStats();
         }
         return result;
