@@ -38,7 +38,7 @@ def about():
         message='Your application description page.'
     )
 
-@app.route('/api/<endpoint>')
+@app.route('/api/<endpoint>', methods=["POST"])
 def api(endpoint):
     """Responds to api requests"""
     if endpoint == "put":

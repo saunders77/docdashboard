@@ -143,16 +143,20 @@ function mybuttonClick() {
 }
 
 function post() {
+    var stats = {
+        charcounts: [],
+        charcount: null
+    };
+
+    stats = JSON.stringify(stats);
+
     $.ajax({
         type: "POST",
         url: "/api/put",
         data: {
             clientid: null,
             docid: null,
-            stats: {        
-                    charcounts: [],
-                    charcount: null             
-            }
+            stats: stats
         },
         success: postCallback,
     });
