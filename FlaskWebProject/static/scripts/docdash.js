@@ -24,7 +24,7 @@ Office.initialize = function (reason) {
             
         });
 
-        document.body.innerHTML += "foom";
+        document.body.innerHTML += "foomy";
         
         Office.context.document.setSelectedDataAsync("Hello World!",
                 function (asyncResult) {
