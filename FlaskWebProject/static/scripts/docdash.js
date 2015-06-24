@@ -79,7 +79,7 @@ var myDoc = {
         write("returned from getting text");
         if (result.status == "succeeded") {
             var d = new Date();
-            
+            write("length: " + result.value.length);
             this.data.stats.charCount = result.value.length;
             this.data.stats.charCounts.push([d.getDate(),this.data.stats.charCount]);
         }
@@ -132,6 +132,10 @@ function test() {
             );
 }
 
+function mybuttonClick() {
+    myDoc.startRecording();
+    myDoc.startDisplaying();
+}
 
 Office.initialize = function (reason) {
 
@@ -139,9 +143,8 @@ Office.initialize = function (reason) {
 
 
         document.body.innerHTML += "foomp";
+
         
-        myDoc.startRecording();
-        myDoc.startDisplaying();
 
     });
 } 
