@@ -2,6 +2,17 @@
     document.body.innerHTML += "<BR>" + myText;
 }
 
+function test() {
+    Office.context.document.setSelectedDataAsync("Hello World!",
+                function (asyncResult) {
+                    var error = asyncResult.error;
+                    if (asyncResult.status === "failed") {
+                        write(error.name + ": " + error.message);
+                    }
+                }
+            );
+}
+
 
 Office.initialize = function (reason) {
 
@@ -11,32 +22,15 @@ Office.initialize = function (reason) {
 
         $("#mybutton").click(function () {
 
-
+            test();
             
-            Office.context.document.setSelectedDataAsync("Hello World!",
-                function (asyncResult) {
-                    var error = asyncResult.error;
-                    if (asyncResult.status === "failed") {
-                        write(error.name + ": " + error.message);
-                    }
-                }
-            );
+            
             
         });
 
         document.body.innerHTML += "foomy";
         
-        Office.context.document.setSelectedDataAsync("Hello World!",
-                function (asyncResult) {
-                    var error = asyncResult.error;
-                    if (asyncResult.status === "failed") {
-                        write(error.name + ": " + error.message);
-                    }
-                    else{
-                        write("success!");
-                    }
-                }
-            );
+        test();
 
     });
 } 
