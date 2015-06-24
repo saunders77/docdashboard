@@ -13,10 +13,12 @@ var myDoc = {
     
     //settings variables which should be saved in the document
     data: {
+        id: null,
         recordingPeriod: 15000, // 15 seconds
         displayPeriod: 15000,
+        timeCreated: null,    
         stats: {
-            timeCreated: null,        
+
             charCounts: [], // the array of counts and times
             charCount: null // the latest count
             
@@ -29,6 +31,9 @@ var myDoc = {
         var result = false;
         if(Office.context.document.settings.get("data")){
             myDoc.data = Office.context.document.settings.get("data");
+
+            // create a document identifier
+
             result = true;
         }
         return result;
@@ -50,10 +55,10 @@ var myDoc = {
             //write("hasn't started yet");
             myDoc.isRecording = true;
             //write("hasn't started yet2");
-            if (!myDoc.data.stats.timeCreated) {
+            if (!myDoc.data.timeCreated) {
                 // then this is the first time recording has ever happened in this doc
                 var d = new Date();
-                myDoc.data.stats.timeCreated = d.getTime();
+                myDoc.data.timeCreated = d.getTime();
             }
             //write("hasn't started yet3");
             myDoc.recordNextStats();
@@ -135,6 +140,26 @@ function test() {
 function mybuttonClick() {
     myDoc.startRecording();
     myDoc.startDisplaying();
+}
+
+function post() {
+    $.ajax({
+        type: "POST",
+        url: "/api/put",
+        data: {
+            clientid: null,
+            docid: null,
+            stats: {        
+                    charcounts: [],
+                    charcount: null             
+            }
+        },
+        success: postCallback,
+    });
+}
+
+function postCallback(result){
+    write("result from Post is: " + result.value);
 }
 
 Office.initialize = function (reason) {

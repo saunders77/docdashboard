@@ -16,7 +16,8 @@ body{
 #debug{
     position:absolute;
     bottom:0px;
-    height:40%;
+    right:0px;
+    height:60%;
     width:60%;
     background-color:blue;
     opacity:0.5;
