@@ -59,7 +59,7 @@ var myDoc = {
     },
     
     recordNextStats: function(){
-        
+        write("recording next stats");
         Office.context.document.getFileAsync("text",this.gotFullText);
         
         // now trigger the next recording, if necessary
