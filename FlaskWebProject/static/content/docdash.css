@@ -12,3 +12,14 @@ body{
     /*overflow:hidden; */
   
 }
+
+#debug{
+    position:absolute;
+    bottom:0px;
+    right:0px;
+    height:60%;
+    width:60%;
+    background-color:blue;
+    opacity:0.5;
+    
+}
