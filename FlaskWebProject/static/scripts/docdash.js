@@ -68,7 +68,7 @@ var myDoc = {
         // now trigger the next recording, if necessary
         if (this.isRecording) {
             this.recordingTimeout = setTimeout(
-                recordNextStats,
+                this.recordNextStats,
                 this.data.recordingPeriod
             );
         }
@@ -112,7 +112,7 @@ var myDoc = {
         // now trigger the next recording, if necessary
         if (this.isDisplaying) {
             this.displayingTimeout = setTimeout(
-                displayNextStats,
+                this.displayNextStats,
                 this.data.displayingPeriod
             );
         }
