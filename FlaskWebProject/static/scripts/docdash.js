@@ -1,5 +1,5 @@
 ﻿function write(myText) {
-    document.getElementById("debug2").innerHTML += "<BR>" + myText;
+    document.body.innerHTML += "<BR>" + myText;
 }
 
 
@@ -9,6 +9,20 @@ Office.initialize = function (reason) {
 
     $(document).ready(function () {
 
+        $("#b1").click(function () {
+
+
+            
+            Office.context.document.setSelectedDataAsync("Hello World!",
+                function (asyncResult) {
+                    var error = asyncResult.error;
+                    if (asyncResult.status === "failed") {
+                        write(error.name + ": " + error.message);
+                    }
+                }
+            );
+            
+        });
 
         document.body.innerHTML += "foo";
 
