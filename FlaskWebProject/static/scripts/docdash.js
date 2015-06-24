@@ -47,6 +47,7 @@ var myDoc = {
             result = false;
         }
         else{
+            write("hasn't started yet");
             this.isRecording = true;
             if (!timeCreated) {
                 // then this is the first time recording has ever happened in this doc
@@ -132,7 +133,7 @@ Office.initialize = function (reason) {
     $(document).ready(function () {
 
 
-        document.body.innerHTML += "foomi";
+        document.body.innerHTML += "fooma";
         
         myDoc.startRecording();
         myDoc.startDisplaying();
