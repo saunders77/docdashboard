@@ -7,6 +7,6 @@ app = Flask(__name__)
 
 import FlaskWebProject.views
 try:
-    import FlaskWebProject.api_put
+    import .api_put
 except:
     raise
