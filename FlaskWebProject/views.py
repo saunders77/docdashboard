@@ -43,3 +43,8 @@ def api(endpoint):
     if endpoint == "put":
         return api_put.api_put(request.values)
 
+@app.route('/api/debug')
+def debug():
+    import sys
+    return str(sys.version)
+
