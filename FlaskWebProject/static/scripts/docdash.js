@@ -9,7 +9,7 @@ Office.initialize = function (reason) {
 
     $(document).ready(function () {
 
-        $("#b1").click(function () {
+        $("#b").click(function () {
 
 
             
