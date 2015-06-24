@@ -113,7 +113,7 @@ var myDoc = {
         if (myDoc.isDisplaying) {
             myDoc.displayingTimeout = setTimeout(
                 myDoc.displayNextStats,
-                myDoc.data.displayingPeriod
+                myDoc.data.displayPeriod
             );
         }
         
