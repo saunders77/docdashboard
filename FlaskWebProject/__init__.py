@@ -9,4 +9,4 @@ import FlaskWebProject.views
 try:
     import FlaskWebProject.api_put
 except:
-    pass
+    raise
