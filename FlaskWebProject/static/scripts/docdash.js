@@ -24,7 +24,7 @@ Office.initialize = function (reason) {
             
         });
 
-        document.body.innerHTML += "foo";
+        document.body.innerHTML += "foom";
 
     });
 } 
