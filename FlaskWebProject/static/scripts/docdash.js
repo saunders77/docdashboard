@@ -68,7 +68,7 @@ var myDoc = {
     
     recordNextStats: function(){
         write("recording next stats");
-        Office.context.document.getFileAsync("text", this.gotFullText);
+        Office.context.document.getFileAsync("text", myDoc.gotFullText);
         
         // now trigger the next recording, if necessary
         if (myDoc.isRecording) {
