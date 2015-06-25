@@ -83,10 +83,17 @@ var myDoc = {
     gotFullText: function(result){
         write("returned from getting text");
         if (result.status == "succeeded") {
-            var d = new Date();
-            write("length: " + result.value.length);
-            myDoc.data.stats.charCount = result.value.length;
-            myDoc.data.stats.charCounts.push([d.getDate(), myDoc.data.stats.charCount]);
+            var myFile = result.value;
+            myFile.getSliceAsync(
+                0,
+                function(result2){
+                    var d = new Date();
+                    write("length: " + result2.value.data.length);
+                    myDoc.data.stats.charCount = result2.value.data.length;
+                    myDoc.data.stats.charCounts.push([d.getDate(), myDoc.data.stats.charCount]);
+                }
+            );
+
         }
         else{
             write("Error:", result.error.message);
