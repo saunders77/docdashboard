@@ -129,6 +129,7 @@
     <Content Include="FlaskWebProject\static\content\docdash.css" />
     <Content Include="FlaskWebProject\static\scripts\4210\office.runtime.js" />
     <Content Include="FlaskWebProject\static\scripts\4210\word.js" />
+    <Content Include="FlaskWebProject\static\scripts\charting.js" />
     <Content Include="FlaskWebProject\static\scripts\docdash.js" />
     <Content Include="FlaskWebProject\static\scripts\office.runtime.js" />
     <Content Include="FlaskWebProject\static\scripts\word.js" />

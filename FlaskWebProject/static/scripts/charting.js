@@ -1,10 +1,11 @@
 ﻿function drawChart(data) {
     var series = [];
     for (docid in data) {
+        parseCharcounts(data[docid].charcounts);
         series.push({
             type: "line",
             name: docid,
-            data: parseCharcounts(data[docid].charcounts)
+            data: data[docid].charcounts
         });
     }
     $("#chartContainer").highcharts("StockChart", {
