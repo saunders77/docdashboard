@@ -74,7 +74,23 @@ var myDoc = {
     },
     
     recordNextStats: function(){
-        Office.context.document.getFileAsync("text", myDoc.gotFullText);
+        // first load text
+        var ctx = new Word.WordClientContext();
+        ctx.customData = OfficeExtension.Constants.iterativeExecutor;
+        var text = ctx.document.body.getText();
+        ctx.load(text);
+
+        ctx.executeAsync().then(
+            function () {
+                write("Document Text:" + text);
+            },
+            function (result) {
+                write("Failed: ErrorCode=" + result.errorCode + ", ErrorMessage=" + result.errorMessage);
+                write(result.traceMessages);
+            }
+        );
+
+        //Office.context.document.getFileAsync("text", myDoc.gotFullText);
         
         // now trigger the next recording, if necessary
         if (myDoc.isRecording) {
@@ -106,7 +122,7 @@ var myDoc = {
 
         }
         else{
-            write("Error:", result.error.message);
+            write("Error: " + result.error.message);
         }
         
         myDoc.saveStateToFile();
@@ -156,14 +172,19 @@ var myDoc = {
 };
 
 function test() {
-    Office.context.document.setSelectedDataAsync("Hello World!",
-                function (asyncResult) {
-                    var error = asyncResult.error;
-                    if (asyncResult.status === "failed") {
-                        write(error.name + ": " + error.message);
-                    }
-                }
-            );
+    var ctx = new Word.WordClientContext();
+    var text = ctx.document.body.getText();
+    ctx.load(text);
+
+    ctx.executeAsync().then(
+        function () {
+            write("Document Text:" + text);
+        },
+        function (result) {
+            write("Failed: ErrorCode=" + result.errorCode + ", ErrorMessage=" + result.errorMessage);
+            write(result.traceMessages);
+        }
+    );
 }
 
 function mybuttonClick() {
@@ -191,6 +212,39 @@ function post() {
    
 }
 
+function get() {
+    var d = new Date();
+    n = d.getDate();
+    
+    var docs = {
+        123456789: {
+            ismine: true,
+            timesafter: n
+        },
+        987654321:{
+            ismine: false,
+            timesafter: n
+        }
+
+    };
+    docs = JSON.stringify(docs);
+    write(docs);
+
+    $.ajax({
+        type: "GET",
+        url: "/api/get",
+        data: {
+            clientid:,
+            docs: docs
+        },
+        success: getCallback,
+    });
+}
+
+function getCallback(result){
+    write(result.987654321.charcounts[0][1]);
+}
+
 function loadClientid() {
     if (typeof (Storage) !== "undefined" && !clientid) {
         clientid = localStorage.getItem("clientid");
@@ -199,6 +253,7 @@ function loadClientid() {
         write("Error: no local storage.");
     }
 }
+
 
 
 Office.initialize = function (reason) {
