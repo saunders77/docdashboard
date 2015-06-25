@@ -45,6 +45,6 @@ def api(endpoint):
 
 @app.route('/api/debug')
 def debug():
-    import sys
+    import FlaskWebProject.storage
     return str(sys.version)
 

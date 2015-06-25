@@ -31,13 +31,63 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FlaskWebProject\api_put.py" />
-    <Compile Include="FlaskWebProject\docdb.py" />
+    <Compile Include="FlaskWebProject\lib\azure\http\batchclient.py" />
+    <Compile Include="FlaskWebProject\lib\azure\http\httpclient.py" />
+    <Compile Include="FlaskWebProject\lib\azure\http\requestsclient.py" />
+    <Compile Include="FlaskWebProject\lib\azure\http\winhttp.py" />
+    <Compile Include="FlaskWebProject\lib\azure\http\__init__.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicebus\servicebusservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicebus\__init__.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicemanagement\schedulermanagementservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicemanagement\servicebusmanagementservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicemanagement\servicemanagementclient.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicemanagement\servicemanagementservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicemanagement\sqldatabasemanagementservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicemanagement\websitemanagementservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\servicemanagement\__init__.py" />
+    <Compile Include="FlaskWebProject\lib\azure\storage\blobservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\storage\cloudstorageaccount.py" />
+    <Compile Include="FlaskWebProject\lib\azure\storage\queueservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\storage\sharedaccesssignature.py" />
+    <Compile Include="FlaskWebProject\lib\azure\storage\storageclient.py" />
+    <Compile Include="FlaskWebProject\lib\azure\storage\tableservice.py" />
+    <Compile Include="FlaskWebProject\lib\azure\storage\__init__.py" />
+    <Compile Include="FlaskWebProject\lib\azure\__init__.py" />
+    <Compile Include="FlaskWebProject\lib\dateutil\easter.py" />
+    <Compile Include="FlaskWebProject\lib\dateutil\parser.py" />
+    <Compile Include="FlaskWebProject\lib\dateutil\relativedelta.py" />
+    <Compile Include="FlaskWebProject\lib\dateutil\rrule.py" />
+    <Compile Include="FlaskWebProject\lib\dateutil\tz.py" />
+    <Compile Include="FlaskWebProject\lib\dateutil\tzwin.py" />
+    <Compile Include="FlaskWebProject\lib\dateutil\zoneinfo\__init__.py" />
+    <Compile Include="FlaskWebProject\lib\dateutil\__init__.py" />
+    <Compile Include="FlaskWebProject\lib\six.py" />
+    <Compile Include="FlaskWebProject\lib\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlaskWebProject\storage.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="runserver.py" />
     <Compile Include="FlaskWebProject\__init__.py" />
     <Compile Include="FlaskWebProject\views.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FlaskWebProject\" />
+    <Folder Include="FlaskWebProject\lib\" />
+    <Folder Include="FlaskWebProject\lib\azure\" />
+    <Folder Include="FlaskWebProject\lib\azure\http\" />
+    <Folder Include="FlaskWebProject\lib\azure\http\__pycache__\" />
+    <Folder Include="FlaskWebProject\lib\azure\servicebus\" />
+    <Folder Include="FlaskWebProject\lib\azure\servicebus\__pycache__\" />
+    <Folder Include="FlaskWebProject\lib\azure\servicemanagement\" />
+    <Folder Include="FlaskWebProject\lib\azure\servicemanagement\__pycache__\" />
+    <Folder Include="FlaskWebProject\lib\azure\storage\" />
+    <Folder Include="FlaskWebProject\lib\azure\storage\__pycache__\" />
+    <Folder Include="FlaskWebProject\lib\dateutil\" />
+    <Folder Include="FlaskWebProject\lib\dateutil\zoneinfo\" />
+    <Folder Include="FlaskWebProject\lib\dateutil\zoneinfo\__pycache__\" />
+    <Folder Include="FlaskWebProject\lib\dateutil\__pycache__\" />
     <Folder Include="FlaskWebProject\static\" />
     <Folder Include="FlaskWebProject\static\content\" />
     <Folder Include="FlaskWebProject\static\fonts\" />
@@ -45,6 +95,36 @@
     <Folder Include="FlaskWebProject\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FlaskWebProject\lib\azure\http\__pycache__\batchclient.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\http\__pycache__\httpclient.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\http\__pycache__\requestsclient.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\http\__pycache__\winhttp.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\http\__pycache__\__init__.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicebus\__pycache__\servicebusservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicebus\__pycache__\__init__.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicemanagement\__pycache__\schedulermanagementservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicemanagement\__pycache__\servicebusmanagementservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicemanagement\__pycache__\servicemanagementclient.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicemanagement\__pycache__\servicemanagementservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicemanagement\__pycache__\sqldatabasemanagementservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicemanagement\__pycache__\websitemanagementservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\servicemanagement\__pycache__\__init__.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\storage\__pycache__\blobservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\storage\__pycache__\cloudstorageaccount.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\storage\__pycache__\queueservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\storage\__pycache__\sharedaccesssignature.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\storage\__pycache__\storageclient.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\storage\__pycache__\tableservice.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\azure\storage\__pycache__\__init__.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\dateutil\zoneinfo\dateutil-zoneinfo.tar.gz" />
+    <Content Include="FlaskWebProject\lib\dateutil\zoneinfo\__pycache__\__init__.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\dateutil\__pycache__\easter.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\dateutil\__pycache__\parser.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\dateutil\__pycache__\relativedelta.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\dateutil\__pycache__\rrule.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\dateutil\__pycache__\tz.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\dateutil\__pycache__\tzwin.cpython-34.pyc" />
+    <Content Include="FlaskWebProject\lib\dateutil\__pycache__\__init__.cpython-34.pyc" />
     <Content Include="FlaskWebProject\static\content\docdash.css" />
     <Content Include="FlaskWebProject\static\scripts\docdash.js" />
     <Content Include="FlaskWebProject\static\scripts\office.runtime.js" />
