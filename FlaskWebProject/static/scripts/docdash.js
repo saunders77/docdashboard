@@ -368,12 +368,3 @@ Office.initialize = function (reason) {
     });
 } 
 
-function parseCharcounts(charcounts) {
-    for (var i = 0; i < charcounts.length; ++i) {
-        if (typeof charcounts[i][0] === "string") {
-            charcounts[i][0] = Date.parse(charcounts[i][0]);
-        } else if (typeof charcounts[i][0] === "number") {
-            charcounts[i][0] = new Date(charcounts[i][0] * 1000);
-        }
-    }
-}
