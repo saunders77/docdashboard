@@ -331,5 +331,13 @@ Office.initialize = function (reason) {
         document.body.innerHTML += "foomp";
 
     });
-} 
+}
+
+function parseCharcounts(charcounts) {
+    for (var i = 0; i < charcounts.length; ++i) {
+        if (typeof charcounts[i][0] === "string") {
+            charcounts[i][0] = Date.parse(charcounts[i][0]);
+        }
+    }
+}
 
