@@ -354,5 +354,13 @@ Office.initialize = function (reason) {
         myDoc.loadStateFromFile();
 
     });
-} 
+}
+
+function parseCharcounts(charcounts) {
+    for (var i = 0; i < charcounts.length; ++i) {
+        if (typeof charcounts[i][0] === "string") {
+            charcounts[i][0] = Date.parse(charcounts[i][0]);
+        }
+    }
+}
 
