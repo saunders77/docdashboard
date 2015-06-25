@@ -3,7 +3,6 @@
 function drawChart(data) {
     var series = [];
     for (docid in data) {
-        parseCharcounts(data[docid].charcounts);
         series.push({
             type: "line",
             name: docid,
