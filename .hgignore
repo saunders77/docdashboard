@@ -4,3 +4,4 @@ docdashboard/.ptvs/*
 docdashboard/Scripts/*
 obj/*
 bin/*
+*__pycache__/*
