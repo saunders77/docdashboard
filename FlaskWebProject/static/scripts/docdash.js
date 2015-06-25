@@ -242,7 +242,9 @@ function get() {
 }
 
 function getCallback(result){
-    write(result.987654321.charcounts[0][1]);
+    for(var id in result.docs){
+        write(result.id.charcounts[0][1]);
+    }
 }
 
 function loadClientid() {
