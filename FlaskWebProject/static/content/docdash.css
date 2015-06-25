@@ -4,11 +4,11 @@
 
 body{
 
-    /*color:rgb(175,185,195);*/
-    color: white;
+    /*color:rgb(42,87,154);*/
+    color: rgb(20,20,20);
     margin:0px;
     padding:5px;
-    background-color:rgb(42,87,154);
+    background-color:white;
     /*overflow:hidden; */
   
 }

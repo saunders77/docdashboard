@@ -168,6 +168,7 @@ var myDoc = {
     
     displayNextStats: function(){
         //get updates values from the server
+        write("about to get updates");
         get();
 
         // now trigger the next recording, if necessary
@@ -290,7 +291,7 @@ function get() {
     }
 
     docs = JSON.stringify(docs);
-
+    write("will show docs:");
     write(docs);
 
     $.ajax({
