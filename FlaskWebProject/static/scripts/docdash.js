@@ -210,6 +210,18 @@ var myDoc = {
 
 function updateVisualization() {
     // mayank's hook
+    var data = {};
+    data[myDoc.data.docid] = {
+        charcounts: myDoc.data.charcounts
+    };
+
+    for (var i = 0; i < myDoc.data.displayedDocsIds.length; ++i) {
+        data[myDoc.data.displayedDocsIds[i]] = {
+            charcounts: displayedDocsData[myDoc.data.displayedDocsIds[i]].charcounts
+        };
+    }
+
+    drawChart(data);
 
     // first, this doc
     document.getElementById("displayList").innerHTML = "<li>myDoc " + myDoc.data.docid.substring(0,6) + " chars: " + myDoc.data.charcounts[myDoc.data.charcounts.length - 1][1] + "</li>";
@@ -356,3 +368,12 @@ Office.initialize = function (reason) {
     });
 } 
 
+function parseCharcounts(charcounts) {
+    for (var i = 0; i < charcounts.length; ++i) {
+        if (typeof charcounts[i][0] === "string") {
+            charcounts[i][0] = Date.parse(charcounts[i][0]);
+        } else if (typeof charcounts[i][0] === "number") {
+            charcounts[i][0] = new Date(charcounts[i][0] * 1000);
+        }
+    }
+}
