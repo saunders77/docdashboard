@@ -10,7 +10,7 @@ var MIN_POST_INTERVAL = 1000; // the minimum time between Post calls to the serv
 
 var clientid = null;
 
-var displayedDocs = {};
+var displayedDocsData = {};
 
 var myDoc = {
     
@@ -24,8 +24,9 @@ var myDoc = {
     data: {
         docid: null,
         name: null,
-        recordingPeriod: 15000, // 15 seconds
-        displayPeriod: 15000,
+        recordingPeriod: 5000, // 5 seconds
+        displayPeriod: 5000,
+        displayedDocsIds: [],
         timeCreated: null,
         charcounts: [], // the array of counts and times
         stats: { // variables which will be sent ot the server     
@@ -52,7 +53,7 @@ var myDoc = {
     
     saveStateToFile: function(){
         Office.context.document.settings.set("data", myDoc.data);
-        Office.context.document.settings.saveAsync("data", myDoc.data);
+        Office.context.document.settings.saveAsync();
     },
     
     startRecording: function(){
@@ -75,9 +76,11 @@ var myDoc = {
     
     recordNextStats: function(){
         // first load text
+
+        /* failed attempt at using new APIs. 3 hrs. damn.
         var ctx = new Word.WordClientContext();
         ctx.customData = OfficeExtension.Constants.iterativeExecutor;
-        var text = ctx.document.body.getText();
+        var text = ctx.document.body.text;
         ctx.load(text);
 
         ctx.executeAsync().then(
@@ -89,8 +92,8 @@ var myDoc = {
                 write(result.traceMessages);
             }
         );
-
-        //Office.context.document.getFileAsync("text", myDoc.gotFullText);
+        */
+        Office.context.document.getFileAsync("text", myDoc.gotFullText);
         
         // now trigger the next recording, if necessary
         if (myDoc.isRecording) {
@@ -110,13 +113,19 @@ var myDoc = {
                 function(result2){
                     var d = new Date();
                     myDoc.data.stats.charcount = result2.value.data.length;
-                    myDoc.data.charcounts.push([d.getDate(), myDoc.data.stats.charcount]);
+                    myDoc.data.charcounts.push([d.getTime(), myDoc.data.stats.charcount]);
 
                     // save the data in this doc as one of the docs
-                    displayedDocs[myDoc.data.docid] = myDoc.data;
+                    displayedDocsData[myDoc.data.docid] = myDoc.data;
 
                     //send to server
                     post();
+
+                    myFile.closeAsync(function (result) {
+                        if (result.status == "succeeded") {
+                            // file closed successfully
+                        }
+                    });
                 }
             );
 
@@ -125,21 +134,23 @@ var myDoc = {
             write("Error: " + result.error.message);
         }
         
-        myDoc.saveStateToFile();
+        
     },
 
     postCallback: function(result){
+
+
         myDoc.data.docid = result.docid;
-        write("docid from server is: " + docid);
+        //write("docid from server is: " + myDoc.data.docid);
         if(typeof(Storage) !== "undefined" && !clientid) {
             localStorage.setItem("clientid",result.clientid);
             clientid = result.clientid;
         }
         else {
-            write("Error: no local storage.");
+            //write("Error: no local storage.");
         }
 
-
+        myDoc.saveStateToFile();
     },
     
     startDisplaying: function(){
@@ -156,9 +167,9 @@ var myDoc = {
     },
     
     displayNextStats: function(){
-        
-        write("Characters: " + myDoc.data.stats.charcount);
-        
+        //get updates values from the server
+        get();
+
         // now trigger the next recording, if necessary
         if (myDoc.isDisplaying) {
             myDoc.displayingTimeout = setTimeout(
@@ -168,12 +179,41 @@ var myDoc = {
         }
         
     },
+
+    getCallback: function (result) {
+        write("receiving " + JSON.stringify(result));
+
+        for (var idKey in result.docs) {
+            if (idKey == myDoc.data.docid) {
+                fillMissingData(result[idKey].charcounts,myDoc.data.charcounts);
+            }
+            else {
+                fillMissingData(result[idKey].charcounts, displayedDocsData[idKey].charcounts);
+            }
+        }
+
+    }
     
 };
 
+function fillMissingData(serverDateArray, localDateArray) {
+    // the localDataArray could have older data than what the serverDateArray has, but there could be overlapping data
+    // so we need to take the union of both for the localDateArray
+    // they're both ordered
+
+    for (var i = 0; i < serverDateArray.length; i++) {
+        // is this date after all the client ones?
+        if (localDateArray.length && Date.parse(serverDateArray[i][0]) > Date.parse(localDateArray[localDateArray.length - 1][0])) {
+            localDateArray.push(serverDateArray[i])
+        }
+    }
+
+}
+
+
 function test() {
     var ctx = new Word.WordClientContext();
-    var text = ctx.document.body.getText();
+    var text = ctx.document.body.text;
     ctx.load(text);
 
     ctx.executeAsync().then(
@@ -193,10 +233,14 @@ function mybuttonClick() {
 }
 
 function post() {
+    
+
     var d = new Date();
-    if (!myDoc.lastPostTime || d.getDate - myDoc.lastPostTime >= MIN_POST_INTERVAL) {
+    if (!myDoc.lastPostTime || d.getTime - myDoc.lastPostTime >= MIN_POST_INTERVAL) {
         // then enough time has passed that we can give more info to the server
         var mystats = JSON.stringify(myDoc.data.stats);
+
+        write("sending " + mystats);
 
         $.ajax({
             type: "POST",
@@ -213,38 +257,38 @@ function post() {
 }
 
 function get() {
-    var d = new Date();
-    n = d.getDate();
+    if(!myDoc.data.docid){
+        return;
+    }
     
-    var docs = {
-        123456789: {
-            ismine: true,
-            timesafter: n
-        },
-        987654321:{
-            ismine: false,
-            timesafter: n
-        }
+    var docs = {};
 
-    };
+    var myTimesAfter = null;
+    if (myDoc.data.charcounts.length) {
+        myTimesAfter = myDoc.data.charcounts[myDoc.data.charcounts.length - 1][0];
+    }
+    
+    docs[myDoc.data.docid] = {
+        ismine: true,
+        timesafter: myTimesAfter
+    }
+
+    // now add all the other necessary documents to docs
+    //for(var i = 0;i < )
+
     docs = JSON.stringify(docs);
+
     write(docs);
 
     $.ajax({
         type: "GET",
         url: "/api/get",
         data: {
-            clientid: "555555555",
+            clientid: clientid,
             docs: docs
         },
-        success: getCallback,
+        success: myDoc.getCallback,
     });
-}
-
-function getCallback(result){
-    for(var id in result.docs){
-        write(result.id.charcounts[0][1]);
-    }
 }
 
 function loadClientid() {
@@ -254,6 +298,10 @@ function loadClientid() {
     else {
         write("Error: no local storage.");
     }
+}
+
+function addDoc() {
+    myDoc.data.displayedDocsIds.push(document.getElementById("enterDoc").value);
 }
 
 
