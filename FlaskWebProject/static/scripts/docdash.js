@@ -12,6 +12,12 @@ var clientid = null;
 
 var displayedDocsData = {};
 
+function DisplayDocData() {
+    this.name = null;
+    this.charcounts = [];
+    this.timeCreated = null;
+}
+
 var myDoc = {
     
     lastPostTime: null,
@@ -67,7 +73,7 @@ var myDoc = {
             if (!myDoc.data.timeCreated) {
                 // then this is the first time recording has ever happened in this doc
                 var d = new Date();
-                myDoc.data.timeCreated = d.getTime();
+                myDoc.data.timeCreated = d;
             }
             myDoc.recordNextStats();
         }
@@ -113,7 +119,7 @@ var myDoc = {
                 function(result2){
                     var d = new Date();
                     myDoc.data.stats.charcount = result2.value.data.length;
-                    myDoc.data.charcounts.push([d.getTime(), myDoc.data.stats.charcount]);
+                    myDoc.data.charcounts.push([d, myDoc.data.stats.charcount]);
 
                     // save the data in this doc as one of the docs
                     displayedDocsData[myDoc.data.docid] = myDoc.data;
@@ -186,16 +192,35 @@ var myDoc = {
 
         for (var idKey in result.docs) {
             if (idKey == myDoc.data.docid) {
-                fillMissingData(result[idKey].charcounts,myDoc.data.charcounts);
+                fillMissingData(result.docs[idKey].charcounts,myDoc.data.charcounts);
             }
             else {
-                fillMissingData(result[idKey].charcounts, displayedDocsData[idKey].charcounts);
+                if (!displayedDocsData[idKey]) {
+                    displayedDocsData[idKey] = new DisplayDocData();
+                }
+                fillMissingData(result.docs[idKey].charcounts, displayedDocsData[idKey].charcounts);
             }
         }
+
+        updateVisualization();
 
     }
     
 };
+
+function updateVisualization() {
+    // mayank's hook
+
+    // first, this doc
+    document.getElementById("displayList").innerHTML = "<li>myDoc " + myDoc.data.docid.substring(0,6) + " chars: " + myDoc.data.charcounts[myDoc.data.charcounts.length - 1][1] + "</li>";
+
+    // then, other docs
+    for (var i = 0; i < myDoc.data.displayedDocsIds.length; i++) {
+        var id = myDoc.data.displayedDocsIds[i];
+        document.getElementById("displayList").innerHTML += "<li>o Doc" + id.substring(0, 6) + " chars: " + displayedDocsData[id].charcounts[displayedDocsData[id].charcounts.length - 1][1] + "</li>";
+    }
+
+}
 
 function fillMissingData(serverDateArray, localDateArray) {
     // the localDataArray could have older data than what the serverDateArray has, but there could be overlapping data
@@ -204,8 +229,8 @@ function fillMissingData(serverDateArray, localDateArray) {
 
     for (var i = 0; i < serverDateArray.length; i++) {
         // is this date after all the client ones?
-        if (localDateArray.length && Date.parse(serverDateArray[i][0]) > Date.parse(localDateArray[localDateArray.length - 1][0])) {
-            localDateArray.push(serverDateArray[i])
+        if (!localDateArray.length || Date.parse(serverDateArray[i][0]) > Date.parse(localDateArray[localDateArray.length - 1][0])) {
+            localDateArray.push(serverDateArray[i]);
         }
     }
 
@@ -237,7 +262,7 @@ function post() {
     
 
     var d = new Date();
-    if (!myDoc.lastPostTime || d.getTime - myDoc.lastPostTime >= MIN_POST_INTERVAL) {
+    if (!myDoc.lastPostTime || d - myDoc.lastPostTime >= MIN_POST_INTERVAL) {
         // then enough time has passed that we can give more info to the server
         var mystats = JSON.stringify(myDoc.data.stats);
 
@@ -279,7 +304,7 @@ function get() {
     {
         if (myDoc.data.displayedDocsIds[i] != myDoc.data.docid) {
             var timesAfter = null;
-            if(displayedDocsData[myDoc.data.displayedDocsIds[i]].charcounts.length){
+            if(displayedDocsData[myDoc.data.displayedDocsIds[i]] && displayedDocsData[myDoc.data.displayedDocsIds[i]].charcounts.length){
                 timesAfter = displayedDocsData[myDoc.data.displayedDocsIds[i]].charcounts[displayedDocsData[myDoc.data.displayedDocsIds[i]].charcounts.length - 1][0];
             }
 
@@ -327,8 +352,6 @@ Office.initialize = function (reason) {
         myDoc.setName("myDocument");
         loadClientid();
         myDoc.loadStateFromFile();
-
-        document.body.innerHTML += "foomp";
 
     });
 } 
