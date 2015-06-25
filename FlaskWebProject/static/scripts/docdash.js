@@ -2,10 +2,19 @@
     document.getElementById("debug").innerHTML += "<BR>" + myText;
 }
 
-// classes
+// constants
+
+var MIN_POST_INTERVAL = 1000; // the minimum time between Post calls to the server
+
+// objects
+
+var clientid = null;
+
+var displayedDocs = {};
 
 var myDoc = {
     
+    lastPostTime: null,
     isRecording: false,
     isDisplaying: false,
     recordingTimeout: null,
@@ -13,19 +22,21 @@ var myDoc = {
     
     //settings variables which should be saved in the document
     data: {
-        id: null,
+        docid: null,
+        name: null,
         recordingPeriod: 15000, // 15 seconds
         displayPeriod: 15000,
-        timeCreated: null,    
-        stats: {
-
-            charCounts: [], // the array of counts and times
-            charCount: null // the latest count
-            
-            
+        timeCreated: null,
+        charcounts: [], // the array of counts and times
+        stats: { // variables which will be sent ot the server     
+            charcount: null // the latest count
         }
     },
     
+    setName: function(myName){
+        myDoc.data.name = myName;
+    },
+
     loadStateFromFile: function(){
         // pull in data from the document, if any
         var result = false;
@@ -45,29 +56,24 @@ var myDoc = {
     },
     
     startRecording: function(){
-        //write("started recording");
         var result = true;
         if (myDoc.isRecording) {
             // then you can't start it if it's already started
             result = false;
         }
         else{
-            //write("hasn't started yet");
             myDoc.isRecording = true;
-            //write("hasn't started yet2");
             if (!myDoc.data.timeCreated) {
                 // then this is the first time recording has ever happened in this doc
                 var d = new Date();
                 myDoc.data.timeCreated = d.getTime();
             }
-            //write("hasn't started yet3");
             myDoc.recordNextStats();
         }
         return result;
     },
     
     recordNextStats: function(){
-        write("recording next stats");
         Office.context.document.getFileAsync("text", myDoc.gotFullText);
         
         // now trigger the next recording, if necessary
@@ -81,16 +87,20 @@ var myDoc = {
     },
     
     gotFullText: function(result){
-        write("returned from getting text");
         if (result.status == "succeeded") {
             var myFile = result.value;
             myFile.getSliceAsync(
                 0,
                 function(result2){
                     var d = new Date();
-                    write("length: " + result2.value.data.length);
-                    myDoc.data.stats.charCount = result2.value.data.length;
-                    myDoc.data.stats.charCounts.push([d.getDate(), myDoc.data.stats.charCount]);
+                    myDoc.data.stats.charcount = result2.value.data.length;
+                    myDoc.data.charcounts.push([d.getDate(), myDoc.data.stats.charcount]);
+
+                    // save the data in this doc as one of the docs
+                    displayedDocs[myDoc.data.docid] = myDoc.data;
+
+                    //send to server
+                    post();
                 }
             );
 
@@ -101,16 +111,28 @@ var myDoc = {
         
         myDoc.saveStateToFile();
     },
+
+    postCallback: function(result){
+        myDoc.data.docid = result.docid;
+        write("docid from server is: " + docid);
+        if(typeof(Storage) !== "undefined" && !clientid) {
+            localStorage.setItem("clientid",result.clientid);
+            clientid = result.clientid;
+        }
+        else {
+            write("Error: no local storage.");
+        }
+
+
+    },
     
     startDisplaying: function(){
         var result = true;
-        write("start?  displaying");
         if (myDoc.isDisplaying) {
             // then you can't start it if it's already started
             result = false;
         }
         else{
-            write("yes, we can start displaying");
             myDoc.isDisplaying = true;
             myDoc.displayNextStats();
         }
@@ -119,7 +141,7 @@ var myDoc = {
     
     displayNextStats: function(){
         
-        write("Characters: " + myDoc.data.stats.charCount);
+        write("Characters: " + myDoc.data.stats.charcount);
         
         // now trigger the next recording, if necessary
         if (myDoc.isDisplaying) {
@@ -150,37 +172,44 @@ function mybuttonClick() {
 }
 
 function post() {
-    var stats = {
-        charcounts: [],
-        charcount: null
-    };
+    var d = new Date();
+    if (!myDoc.lastPostTime || d.getDate - myDoc.lastPostTime >= MIN_POST_INTERVAL) {
+        // then enough time has passed that we can give more info to the server
+        var mystats = JSON.stringify(myDoc.data.stats);
 
-    stats = JSON.stringify(stats);
-
-    $.ajax({
-        type: "POST",
-        url: "/api/put",
-        data: {
-            clientid: null,
-            docid: null,
-            stats: stats
-        },
-        success: postCallback,
-    });
+        $.ajax({
+            type: "POST",
+            url: "/api/put",
+            data: {
+                clientid: clientid,
+                docid: myDoc.data.docid,
+                stats: mystats
+            },
+            success: myDoc.postCallback,
+        });
+    }
+   
 }
 
-function postCallback(result){
-    write("docid from Post is: " + result.docid);
+function loadClientid() {
+    if (typeof (Storage) !== "undefined" && !clientid) {
+        clientid = localStorage.getItem("clientid");
+    }
+    else {
+        write("Error: no local storage.");
+    }
 }
+
 
 Office.initialize = function (reason) {
 
     $(document).ready(function () {
 
+        myDoc.setName("myDocument");
+        loadClientid();
+        myDoc.loadStateFromFile();
 
         document.body.innerHTML += "foomp";
-
-        
 
     });
 } 
