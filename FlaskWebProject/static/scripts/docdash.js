@@ -274,7 +274,20 @@ function get() {
     }
 
     // now add all the other necessary documents to docs
-    //for(var i = 0;i < )
+    for (var i = 0; i < myDoc.data.displayedDocsIds.length; i++)
+    {
+        if (myDoc.data.displayedDocsIds[i] != myDoc.data.docid) {
+            var timesAfter = null;
+            if(displayedDocsData[myDoc.data.displayedDocsIds[i]].charcounts.length){
+                timesAfter = displayedDocsData[myDoc.data.displayedDocsIds[i]].charcounts[displayedDocsData[myDoc.data.displayedDocsIds[i]].charcounts.length - 1][0];
+            }
+
+            docs[myDoc.data.displayedDocsIds[i]] = {
+                ismine: false,
+                timesafter: timesAfter
+            };
+        }
+    }
 
     docs = JSON.stringify(docs);
 
