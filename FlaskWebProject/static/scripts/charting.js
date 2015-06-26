@@ -23,6 +23,9 @@ function drawChart(data) {
             navigator: {
                 enabled: false
             },
+            scrollbar: {
+                enabled: false
+            },
             rangeSelector: {
                 buttons: [{
                     type: 'minute',
