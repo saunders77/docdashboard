@@ -1,5 +1,9 @@
 ﻿var chart = null;
-
+Highcharts.setOptions({
+    global: {
+        timezoneOffset: 420
+    }
+});
 function drawChart(data) {
     var series = [];
     for (docid in data) {
