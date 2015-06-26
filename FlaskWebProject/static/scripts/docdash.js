@@ -118,7 +118,8 @@ var myDoc = {
                 0,
                 function(result2){
                     var d = new Date();
-                    myDoc.data.stats.charcount = result2.value.data.length;
+                    myDoc.data.stats.charcount = result2.value.data.length - 3;
+                    // for some reason an empty doc returns 3
                     myDoc.data.charcounts.push([d, myDoc.data.stats.charcount]);
 
                     // save the data in this doc as one of the docs
@@ -212,6 +213,17 @@ var myDoc = {
 
 function updateVisualization() {
     // mayank's hook
+
+    document.getElementById("myDocId").innerHTML = myDoc.data.docid;
+    document.getElementById("myChars").innerHTML = myDoc.data.charcounts[myDoc.data.charcounts.length - 1][1];
+    for (var i = 0; i < myDoc.data.displayedDocsIds.length; ++i) {
+        if (myDoc.data.docid != myDoc.data.displayedDocsIds[i]) {
+            var id = myDoc.data.displayedDocsIds[i];
+            document.getElementById(id).innerHTML = displayedDocsData[id].charcounts[displayedDocsData[id].charcounts.length - 1][1];
+        }
+    }
+
+
     var data = {};
     data[myDoc.data.docid] = {
         charcounts: myDoc.data.charcounts
@@ -225,6 +237,8 @@ function updateVisualization() {
 
     drawChart(data);
 
+    /*
+
     // first, this doc
     document.getElementById("displayList").innerHTML = "<li>myDoc " + myDoc.data.docid.substring(0,6) + " chars: " + myDoc.data.charcounts[myDoc.data.charcounts.length - 1][1] + "</li>";
 
@@ -233,6 +247,7 @@ function updateVisualization() {
         var id = myDoc.data.displayedDocsIds[i];
         document.getElementById("displayList").innerHTML += "<li>o Doc" + id.substring(0, 6) + " chars: " + displayedDocsData[id].charcounts[displayedDocsData[id].charcounts.length - 1][1] + "</li>";
     }
+    */
 
 }
 
@@ -354,7 +369,9 @@ function loadClientid() {
 }
 
 function addDoc() {
-    myDoc.data.displayedDocsIds.push(document.getElementById("enterDoc").value);
+    var newDocIdValue = document.getElementById("enterDoc").value
+    myDoc.data.displayedDocsIds.push(newDocIdValue);
+    document.body.innerHTML += "<div class='friendstats'><span class='statsTitle'>Friend: </span><span class='smalltext'>" + newDocIdValue + "</span><br /><span>Characters: <span class='statsTitle' id='" + newDocIdValue + "'>0</span></span></div>";
 }
 
 

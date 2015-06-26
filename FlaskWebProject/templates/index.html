@@ -20,11 +20,28 @@
     <title>Doc Dashboard</title>
 </head>
 <body>
-    <button id="mybutton" onclick="mybuttonClick();" type="button">Start Recording Stats</button>
-    <input id="enterDoc" />
-    <button id="addDoc" onclick="addDoc()">Add Document</button>
-    <ol id="displayList"></ol>
     <div id=debug>Debug</div>
-    <div id="chartContainer" style="width:100%; height:400px;"></div>
+    <button id="mybutton" onclick="mybuttonClick();" type="button">Start Recording Stats</button>
+    <div id="chartContainer"></div>
+    <input id="enterDoc" placeholder="Enter a Doc ID." /> <button id="addDoc" onclick="addDoc()">Add Document</button>
+    <div id="docstats">
+        
+        <span class="statsTitle">
+            My Doc:
+        </span>
+        <span id="myDocId" class="smalltext">
+            DocID
+        </span>
+        <br />
+        <span id="myDocCount">
+            Characters: <span class="statsTitle" id="myChars">0</span>
+        </span>
+    </div>
+    
+    
+    
+    <ol id="displayList"></ol>
+    
+    
 </body>
 </html>
