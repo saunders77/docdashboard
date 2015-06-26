@@ -10,6 +10,8 @@ function drawChart(data) {
     for (docid in data) {
         if (data[docid].isMine) {
             var color = colors[0];
+        } else {
+            color = null;
         }
         series.push({
             type: "line",
