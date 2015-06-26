@@ -226,7 +226,7 @@ function updateVisualization() {
     for (var i = 0; i < myDoc.data.displayedDocsIds.length; ++i) {
         if (myDoc.data.docid != myDoc.data.displayedDocsIds[i]) {
             var id = myDoc.data.displayedDocsIds[i];
-            if (displayedDocsData[id].charcounts.length && document.getElementById(id)) {
+            if (displayedDocsData[id] && displayedDocsData[id].charcounts.length && document.getElementById(id)) {
                 document.getElementById(id).innerHTML = displayedDocsData[id].charcounts[displayedDocsData[id].charcounts.length - 1][1];
             }
         }
