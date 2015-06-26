@@ -20,23 +20,26 @@ function drawChart(data) {
             chart: {
                 renderTo: 'chartContainer'
             },
+            navigator: {
+                enabled: false
+            },
             rangeSelector: {
                 buttons: [{
                     type: 'minute',
                     count: 1,
-                    text: '1min'
+                    text: '1m'
                 }, {
                     type: 'minute',
                     count: 15,
-                    text: '15min'
+                    text: '15m'
                 }, {
                     type: 'minute',
                     count: 30,
-                    text: '30min'
+                    text: '30m'
                 }, {
                     type: 'minute',
                     count: 45,
-                    text: '45min'
+                    text: '45m'
                 }, {
                     type: 'minute',
                     count: 60,
