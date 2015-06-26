@@ -195,10 +195,12 @@ var myDoc = {
                 fillMissingData(result.docs[idKey].charcounts,myDoc.data.charcounts);
             }
             else {
+                
                 if (!displayedDocsData[idKey]) {
                     displayedDocsData[idKey] = new DisplayDocData();
-                }
-                fillMissingData(result.docs[idKey].charcounts, displayedDocsData[idKey].charcounts);
+                } 
+                //fillMissingData(result.docs[idKey].charcounts, displayedDocsData[idKey].charcounts);
+                displayedDocsData[idKey]["charcounts"] = result.docs[idKey].charcounts;
             }
         }
 

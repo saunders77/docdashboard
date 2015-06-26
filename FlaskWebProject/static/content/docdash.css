@@ -6,7 +6,7 @@ body{
 
     /*color:rgb(42,87,154);*/
     color: rgb(20,20,20);
-    margin:0px;
+    margin:5px;
     padding:5px;
     background-color:white;
     /*overflow:hidden; */
@@ -24,4 +24,13 @@ body{
     font-size:small;
     color:black;
     
+}
+
+button{
+    background-color:rgb(42,87,154);
+    border-style:none;
+    color:white;
+    cursor:pointer;
+    margin: 5px;
+    padding:5px;
 }
