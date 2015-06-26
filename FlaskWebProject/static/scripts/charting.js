@@ -33,6 +33,9 @@ function drawChart(data) {
             scrollbar: {
                 enabled: false
             },
+            yAxis: {
+                floor: 0
+            },
             rangeSelector: {
                 buttons: [{
                     type: 'minute',
