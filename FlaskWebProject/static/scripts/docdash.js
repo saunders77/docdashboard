@@ -30,8 +30,8 @@ var myDoc = {
     data: {
         docid: null,
         name: null,
-        recordingPeriod: 3200, // 5 seconds
-        displayPeriod: 2700,
+        recordingPeriod: 5100, // 5 seconds
+        displayPeriod: 4900,
         displayedDocsIds: [],
         timeCreated: null,
         charcounts: [], // the array of counts and times
