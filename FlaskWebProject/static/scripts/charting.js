@@ -66,7 +66,12 @@ function drawChart(data) {
         });
     } else {
         for (var i = 0; i < series.length; ++i) {
-            chart.get(series[i].id).setData(series[i].data);
+            var existingSeries = chart.get(series[i].id);
+            if (!existingSeries) {
+                chart.addSeries(series[i]);
+            } else {
+                existingSeries.setData(series[i].data);
+            }
         }
     }
 }
