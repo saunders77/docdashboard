@@ -4,6 +4,50 @@ Highcharts.setOptions({
         timezoneOffset: 420
     }
 });
+
+function createChartWithSeries(series) {
+    chart = new Highcharts.StockChart({
+        chart: {
+            renderTo: 'chartContainer'
+        },
+        navigator: {
+            enabled: false
+        },
+        scrollbar: {
+            enabled: false
+        },
+        yAxis: {
+            floor: 0
+        },
+        rangeSelector: {
+            buttons: [{
+                type: 'minute',
+                count: 1,
+                text: '1m'
+            }, {
+                type: 'minute',
+                count: 15,
+                text: '15m'
+            }, {
+                type: 'minute',
+                count: 30,
+                text: '30m'
+            }, {
+                type: 'minute',
+                count: 45,
+                text: '45m'
+            }, {
+                type: 'minute',
+                count: 60,
+                text: '1h'
+            }, {
+                type: 'all',
+                text: 'All'
+            }]
+        },
+        series: series
+    });
+}
 function drawChart(data) {
     var colors = ['#2b579a', '#a4373a', '#217346'];
     var series = [];
@@ -23,52 +67,12 @@ function drawChart(data) {
     }
 
     if (!chart) {
-        chart = new Highcharts.StockChart({
-            chart: {
-                renderTo: 'chartContainer'
-            },
-            navigator: {
-                enabled: false
-            },
-            scrollbar: {
-                enabled: false
-            },
-            yAxis: {
-                floor: 0
-            },
-            rangeSelector: {
-                buttons: [{
-                    type: 'minute',
-                    count: 1,
-                    text: '1m'
-                }, {
-                    type: 'minute',
-                    count: 15,
-                    text: '15m'
-                }, {
-                    type: 'minute',
-                    count: 30,
-                    text: '30m'
-                }, {
-                    type: 'minute',
-                    count: 45,
-                    text: '45m'
-                }, {
-                    type: 'minute',
-                    count: 60,
-                    text: '1h'
-                }, {
-                    type: 'all',
-                    text: 'All'
-                }]
-            },
-            series: series
-        });
+        createChartWithSeries(series);
     } else {
         for (var i = 0; i < series.length; ++i) {
             var existingSeries = chart.get(series[i].id);
             if (!existingSeries) {
-                chart.addSeries(series[i]);
+                createChartWithSeries(series);
             } else {
                 existingSeries.setData(series[i].data);
             }
