@@ -42,12 +42,14 @@ body{
     margin-left: 0px;
     margin-right: 0px;
     margin-top:0px;
+    margin-bottom:5px;
     padding:3%;
     padding-top:5px;
     padding-bottom:5px;
     width:94%;
     background-color:rgb(42,87,154);
     color:white;
+    visibility:hidden;
 
 }
 
@@ -56,11 +58,12 @@ body{
     margin-left: 0px;
     margin-right: 0px;
     margin-top:0px;
+    margin-bottom:5px;
     padding:3%;
     padding-top:5px;
     padding-bottom:5px;
     width:94%;
-    background-color:rgb(87,87,87);
+    background-color:rgb(99,99,99);
     color:white;
 
 }
@@ -84,6 +87,11 @@ body{
     width: 150px;
     padding:6px;
     margin-right:0px;
+    visibility:hidden;
+}
+
+#addDoc{
+    visibility:hidden;
 }
 
 button{

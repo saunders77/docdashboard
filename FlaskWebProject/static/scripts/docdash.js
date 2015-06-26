@@ -30,8 +30,8 @@ var myDoc = {
     data: {
         docid: null,
         name: null,
-        recordingPeriod: 5000, // 5 seconds
-        displayPeriod: 5000,
+        recordingPeriod: 3200, // 5 seconds
+        displayPeriod: 2700,
         displayedDocsIds: [],
         timeCreated: null,
         charcounts: [], // the array of counts and times
@@ -199,6 +199,10 @@ var myDoc = {
                 
                 if (!displayedDocsData[idKey]) {
                     displayedDocsData[idKey] = new DisplayDocData();
+                    if (!document.getElementById(idKey)) {
+                        document.body.innerHTML += "<div class='friendstats'><span class='statsTitle'>Friend: </span><span class='smalltext'>" + idKey + "</span><br /><span>Characters: <span class='statsTitle' id='" + idKey + "'>0</span></span></div>";
+
+                    }
                 } 
                 //fillMissingData(result.docs[idKey].charcounts, displayedDocsData[idKey].charcounts);
                 displayedDocsData[idKey]["charcounts"] = result.docs[idKey].charcounts;
@@ -215,11 +219,16 @@ function updateVisualization() {
     // mayank's hook
 
     document.getElementById("myDocId").innerHTML = myDoc.data.docid;
+    document.getElementById("docstats").style.visibility = "visible";
+    document.getElementById("enterDoc").style.visibility = "visible";
+    document.getElementById("addDoc").style.visibility = "visible";
     document.getElementById("myChars").innerHTML = myDoc.data.charcounts[myDoc.data.charcounts.length - 1][1];
     for (var i = 0; i < myDoc.data.displayedDocsIds.length; ++i) {
         if (myDoc.data.docid != myDoc.data.displayedDocsIds[i]) {
             var id = myDoc.data.displayedDocsIds[i];
-            document.getElementById(id).innerHTML = displayedDocsData[id].charcounts[displayedDocsData[id].charcounts.length - 1][1];
+            if (displayedDocsData[id].charcounts.length && document.getElementById(id)) {
+                document.getElementById(id).innerHTML = displayedDocsData[id].charcounts[displayedDocsData[id].charcounts.length - 1][1];
+            }
         }
     }
 
@@ -286,6 +295,7 @@ function test() {
 function mybuttonClick() {
     myDoc.startRecording();
     myDoc.startDisplaying();
+    document.getElementById("mybutton").style.backgroundColor = "rgb(99,99,99)";
 }
 
 function post() {
