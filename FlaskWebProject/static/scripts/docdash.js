@@ -214,7 +214,8 @@ function updateVisualization() {
     // mayank's hook
     var data = {};
     data[myDoc.data.docid] = {
-        charcounts: myDoc.data.charcounts
+        charcounts: myDoc.data.charcounts,
+        isMine: true
     };
 
     for (var i = 0; i < myDoc.data.displayedDocsIds.length; ++i) {

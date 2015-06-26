@@ -5,13 +5,18 @@ Highcharts.setOptions({
     }
 });
 function drawChart(data) {
+    var colors = ['#2b579a', '#a4373a', '#217346'];
     var series = [];
     for (docid in data) {
+        if (data[docid].isMine) {
+            var color = colors[0];
+        }
         series.push({
             type: "line",
             name: docid,
             id: docid,
-            data: parseCharcountsForCharting(data[docid].charcounts)
+            data: parseCharcountsForCharting(data[docid].charcounts),
+            color: color
         });
     }
 
