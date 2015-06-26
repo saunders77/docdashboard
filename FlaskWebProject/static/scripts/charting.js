@@ -20,6 +20,32 @@ function drawChart(data) {
             chart: {
                 renderTo: 'chartContainer'
             },
+            rangeSelector: {
+                buttons: [{
+                    type: 'minute',
+                    count: 1,
+                    text: '1min'
+                }, {
+                    type: 'minute',
+                    count: 15,
+                    text: '15min'
+                }, {
+                    type: 'minute',
+                    count: 30,
+                    text: '30min'
+                }, {
+                    type: 'minute',
+                    count: 45,
+                    text: '45min'
+                }, {
+                    type: 'minute',
+                    count: 60,
+                    text: '1h'
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }]
+            },
             series: series
         });
     } else {
